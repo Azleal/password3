@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import "./common.css";
+import "../common.css";
 import "./index.css";
 
 export default function HomePage() {
@@ -15,8 +15,8 @@ export default function HomePage() {
             <span className="text_6">通过加密来将您的信息保存在本地</span>
             <span className="text_7">在您需要的时候就可以通过解密来获得您的账号密码信息。</span>
             <div className="section_2 flex-col">
-              <div className="text-wrapper_2 flex-col">
-                <Link href="/app">
+              <div >
+                <Link href="/vault" className="text-wrapper_2 flex-col">
                   <span className="text_8">launch&nbsp;app</span>
                 </Link>
               </div>

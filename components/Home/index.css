@@ -218,11 +218,7 @@
 
 .block_4 {
   height: 282px;
-  background: 
-  
-  url(/bg/bg4.png)
-  /* background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc3fffac88bfebb041c9e9ba756e2759023bc992a4f74154c20ea5b0155b42e10) */
-    100% no-repeat;
+  background: url(/bg/bg4.png) 100% no-repeat;
   background-size: 100% 100%;
   width: 1393px;
   position: absolute;
