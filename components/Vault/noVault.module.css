@@ -1,0 +1,129 @@
+
+.box_1 {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.image_wrapper_1 {
+  width: 101px;
+  height: 91px;
+  margin: 41px 0 0 908px;
+  display: flex;
+  flex-direction: row;
+}
+
+.image_1 {
+  width: 101px;
+  height: 91px;
+}
+
+.group_3 {
+  width: 1526px;
+  height: 569px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: row;
+}
+
+.image_2 {
+  width: 152px;
+  height: 270px;
+  margin-top: 250px;
+}
+
+.image_3 {
+  width: 184px;
+  height: 193px;
+  margin: 24px 0 0 297px;
+}
+
+.group_4 {
+  width: 340px;
+  height: 208px;
+  margin-left: 163px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text_group_1 {
+  width: 340px;
+  height: 120px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.text_7 {
+  width: 340px;
+  height: 50px;
+  overflow-wrap: break-word;
+  color: rgba(255, 255, 255, 1);
+  font-size: 36px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 50px;
+}
+
+.text_8 {
+  width: 286px;
+  height: 22px;
+  overflow-wrap: break-word;
+  color: rgba(147, 154, 178, 1);
+  font-size: 16px;
+  font-family: PingFangSC-Regular;
+  font-weight: normal;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 22px;
+  margin: 16px 0 0 21px;
+}
+
+.text_9 {
+  width: 252px;
+  height: 20px;
+  overflow-wrap: break-word;
+  color: rgba(99, 109, 144, 1);
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: normal;
+  text-align: left;
+  white-space: nowrap;
+  line-height: 20px;
+  margin: 12px 0 0 44px;
+}
+
+.text_wrapper_2 {
+  background-color: rgba(77, 77, 255, 1);
+  border-radius: 8px;
+  height: 48px;
+  width: 156px;
+  margin: 40px 0 0 87px;
+  display: flex;
+  flex-direction: column;
+}
+
+.text_10 {
+  width: 71px;
+  height: 22px;
+  overflow-wrap: break-word;
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 22px;
+  margin: 13px 0 0 43px;
+}
+
+.image_4 {
+  width: 154px;
+  height: 154px;
+  margin: 175px 0 0 236px;
+}

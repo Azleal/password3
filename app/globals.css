@@ -18,7 +18,11 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient( 315deg, #030316 0%, #2A2A3B 100%);
+  background: linear-gradient( 315deg, #030316 0%, #2A2A3B 100%); 
+  /* background-image: url(/bg/bg3.png), url(/bg/bg4.png);
+  background-repeat : no-repeat, no-repeat;
+  background-position: 70.06rem 20.75rem, 31.94rem 45.88rem;
+  background-size: 35rem 28.32rem, 88.09rem 21.64rem; */
 }
 
 @layer utilities {
