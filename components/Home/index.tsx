@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import "./common.css";
 import "./index.css";
 
@@ -15,7 +16,9 @@ export default function HomePage() {
             <span className="text_7">在您需要的时候就可以通过解密来获得您的账号密码信息。</span>
             <div className="section_2 flex-col">
               <div className="text-wrapper_2 flex-col">
-                <span className="text_8">launch&nbsp;app</span>
+                <Link href="/app">
+                  <span className="text_8">launch&nbsp;app</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -26,7 +29,6 @@ export default function HomePage() {
             alt="image_1"
             src="/bg/bg1.png"
           />
-          <span className="text_9">配图</span>
         </div>
         <Image
           className="image_2"
