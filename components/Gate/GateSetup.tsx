@@ -155,7 +155,7 @@ function Setup() {
             { gateType === GateType.PASSCODE ? (
               <PassGate {...getGateProps}/>
             ) : (
-              <QuestionGate />
+              <QuestionGate {...getGateProps}/>
             ) }
           </div>
         </div>
