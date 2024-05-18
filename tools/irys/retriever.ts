@@ -1,6 +1,7 @@
 import { GateData } from "@/components/Gate/GateSetup"
 import { decryptWithIv } from "@/tools/utils/encryption"
 import axios from "axios"
+import { Address } from "viem"
 
 export async function readGates(vaultId: number, entrypoint: string, firstItemKey?: string){
 
@@ -28,4 +29,7 @@ export async function decryptGateData(encrypted: Buffer, key: string, iv: string
   const text = await decryptWithIv(key, iv, salt, encrypted)
   console.log(`decrypted text: ${text}`)
   return JSON.parse(text) as GateData
+}
+
+export async function readVaultItems(vaultId: number, owner: Address, key: string){
 }

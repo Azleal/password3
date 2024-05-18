@@ -26,7 +26,7 @@ export default function QuestionGateView(props: GateViewProps) {
     if(!checkGateData()){
       throw new Error("gate data invalid")
     }
-    const concatedAnswers = answers.join(',')
+    const concatedAnswers = [...answers, gate.rnd].join(',')
     return hashMessage(concatedAnswers)
   }
 

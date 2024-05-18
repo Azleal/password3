@@ -38,9 +38,24 @@ export async function uploadGates(vaultId: number, gates: GateData[], keys: stri
   }
 }
 
-//上传vault中保存的信息
-function uploadVaultItem(){
+/**
+ * 
+ * @param vaultId vaultId
+ * @param key 加密密钥
+ * @param data vault item的json.stringify之后的字符串
+ */
+export async function uploadVaultItem(vaultId: number, key: string, data: string){
+  const iv = uint8ArrayToHex(getRandomIv())
+  const salt = uint8ArrayToHex(getRandomSalt())
 
+  const {data: encryptedData} = await encryptWithIv(key, iv, salt, data)
+  const client = await getIrys()
+  const uploadData = JSON.stringify(encryptedData)
+  
+  console.log(`uploadData: ${uploadData}`)
+  const tags = getTags(iv, salt, vaultId, 'item')
+  const {id: txId} = await client.upload(uploadData, {tags: tags})
+  console.log(`txId: ${txId}`)
 }
 
 function getTags(iv:string, salt: string, vaultId: number, type: string){

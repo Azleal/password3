@@ -1,9 +1,10 @@
 'use client'
+import { getRandomSalt, uint8ArrayToHex } from '@/tools/utils/encryption';
 import { Button, Input } from 'antd';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { hashMessage } from 'viem';
-import { GateProps, GateType, MAX_GATE_INDEX } from './GateSetup';
+import { GateData, GateProps, GateType, MAX_GATE_INDEX } from './GateSetup';
 import style from './passGate.module.css';
 
 
@@ -16,34 +17,23 @@ export default function PassGate(props: GateProps) {
         console.log(`in passGate`)
     }, [])
 
-    async function setNext() {
-        if (!passcode) {
-            return
-        }
-        console.log(`passGate: setNext, passcode: ${passcode}`)
-        const nextKey = hashMessage(passcode)
-        const item = {
-            type: GateType.PASSCODE,
-            data: [],
-            index: gateIndex,
-        }
-        SetPasscode("")
-        onSetNext(item, nextKey)
+    async function onSet(callback: (gateData: GateData, nextKey: string) => void){
+      if (!passcode) {
+        return
+      }
+      console.log(`passGate: setNext, passcode: ${passcode}`)
+      const rnd = uint8ArrayToHex(getRandomSalt())
+      const item = {
+        type: GateType.PASSCODE,
+        data: [],
+        index: gateIndex,
+        rnd,
+      }
+      const nextKey = hashMessage(`${passcode},${rnd}`)
+      SetPasscode("")
+      callback(item, nextKey)
     }
-
-    async function setComplete() {
-        if (!passcode) {
-            return
-        }
-        const nextKey = hashMessage(passcode)
-        const item = {
-            type: GateType.PASSCODE,
-            data: [],
-            index: gateIndex,
-        }
-        SetPasscode("")
-        onSetComplete(item, nextKey)
-    }
+    
 
     return (
         <div className={style.page}>
@@ -65,10 +55,10 @@ export default function PassGate(props: GateProps) {
                     
                     <div className={style.button_box}>
                         {gateIndex < MAX_GATE_INDEX ? (<div className={style.text_wrapper_1}>
-                            <Button type='primary' className=' h-full' onClick={setNext} disabled={!passcode}>设置下一道门</Button>
+                            <Button type='primary' className=' h-full' onClick={() => onSet(onSetNext)} disabled={!passcode}>设置下一道门</Button>
                         </div>) : <></>}
                         <div className={style.text_wrapper_2}>
-                            <Button type='primary' className=' h-full' onClick={setComplete} disabled={!passcode}>完成设置</Button>
+                            <Button type='primary' className=' h-full' onClick={() => onSet(onSetComplete)} disabled={!passcode}>完成设置</Button>
                         </div>
                     </div>
 
