@@ -6,7 +6,7 @@ export default function OpenVault() {
   
   return (
     <>
-      <ReadGate vaultId={1}/>
+      <ReadGate vaultId={1} to="/vault/items"/>
     </>
   )
 }

@@ -3,19 +3,26 @@ import { Button, Input } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
 import { hashMessage } from 'viem';
+import { GateData } from './GateSetup';
 import style from './passGate.module.css';
 
+export type GateViewProps = {
+  index: number,
+  onNext: (key: string) => void,
+  data?: GateData
+}
 
-export default function PassGateViem(props: GateProps) {
+
+export default function PassGateView(props: GateViewProps) {
 
   const [passcode, SetPasscode] = useState("");
-  const { onSetNext, index: gateIndex} = props
+  const { onNext, index: gateIndex} = props
 
   async function setNext(){
     if(!passcode){
       return
     }
-    onSetNext(hashMessage(passcode))
+    onNext(hashMessage(passcode))
   }
 
   
@@ -45,7 +52,7 @@ export default function PassGateViem(props: GateProps) {
                     placeholder='请输入要设置的密码' value={passcode} onChange={(e) => {SetPasscode(e.target.value)}} />
                 </div>
               </div>
-              <span className={style.text_6}>请输入第{gateIndex+1}道门的钥匙</span>
+              <span className={style.text_setting}>请输入第{gateIndex+1}道门的钥匙</span>
             </div>
           </div>
         </div>

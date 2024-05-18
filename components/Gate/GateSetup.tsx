@@ -21,7 +21,7 @@ export enum GateType {
 
 export type GateData = {
   type: GateType,
-  data: string | string[],
+  data: string[],
   index: number,
 }
 
