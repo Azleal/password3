@@ -17,19 +17,10 @@ export default function QuestionGate(props: GateProps) {
 
   const {onSetComplete, onSetNext, password, index: gateIndex} = props
   const [items, setItems] = useState<QuestionGateDataItemType[]>([{question: '', answer: ''}])
-//   const [checkStatus, SetCheckStatus] = useState<Boolean>(false)
   function addNewItem(){
     const newItem = {question: '', answer: ''}
     setItems(prevItems => [...prevItems, newItem])
   }
-
-//   useEffect(() => {
-//     // 在这里设置checkStatus
-//     const status = checkGateData()
-//     console.log(`checkStatus: ${status}`)
-//     SetCheckStatus(status);
-//   }, [items]); // 当items变化时，这个useEffect会被触发
-
 
   function changeQuestionValue(index: number, value: string){
     setItems(prevItems => {
