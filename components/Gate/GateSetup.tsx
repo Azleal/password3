@@ -1,5 +1,4 @@
-import getIrys from "@/app/irys/getIrysClient"
-import { encrypt, encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/app/utils/encryption"
+import { uploadGates } from "@/app/irys/uploader"
 import { Select, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
@@ -13,7 +12,7 @@ export type GateProps = {
   index: number,
   onSetNext: (gateData: GateData, nextKey: string) => void,
   onSetComplete: (gateData: GateData, nextKey: string) => void,
-}
+} 
 
 export enum GateType {
   PASSCODE = 'passcode',
@@ -35,9 +34,6 @@ function Setup() {
   const [vault, setVault] = useState<VaultType|null>()
   const [loading, setLoading] = useState(true)
   const [gateType, setGateType] = useState<GateType>(GateType.PASSCODE)
-
-  const iv = useMemo(() => uint8ArrayToHex(getRandomIv()), [])
-  const salt = useMemo(() => uint8ArrayToHex(getRandomSalt()), [])
 
   const [gates, setGates] = useState<GateData[]>([])
   const [keys, setKeys] = useState<string[]>([""])
@@ -66,42 +62,16 @@ function Setup() {
   const onSetNext = useCallback((gateData: GateData, nextKey: string) => {
     setGates(prevGates => [...prevGates, gateData])
     setKeys(prevKeys => [...prevKeys, nextKey])
+    console.log('here entered')
   }, [])
 
-  const uploadGatesInfo = useCallback(async (_gates: GateData[], _keys: string[]) => {
-    try {
-      const items = await Promise.all(_gates.map(async (e,i) => {
-        const key = _keys[i]
-        console.log(`key[${i}]: ${key}`)
-        if(!key){
-          return JSON.stringify(e)
-        }
-        const {data} =  await encryptWithIv(key, iv, salt, JSON.stringify(e))
-        return data
-      }))
-      const client = await getIrys()
-      const uploadData = JSON.stringify(items)
-      
-      console.log(`uploadData: ${uploadData}`)
-      const {id: txId} = await client.upload(uploadData, {tags: [
-        {name: "Content-Type", value: "application/json"},
-        {name: "iv", value: iv},
-        {name: "app", value: process.env.NEXT_PUBLIC_APP_NAME as string},
-        {name: "_id", value: vault?.id.toString() as string},
-        {name: "salt", value: salt}]})
-      console.log(`txId: ${txId}`)
-      const hash = await contract.setVaultEntrypoint(vault?.id as number, txId)
-    } catch (error) {
-      console.error("Error uploading gates info:", error)
-      // Handle error here
-    }
-  }, [iv, salt, vault?.id, contract])
-
   const onSetComplete = useCallback((gateData: GateData, nextKey: string) => {
+    setLoading(true)
     const _gates = [...gates, gateData]
     const _keys = [...keys, nextKey]
-    uploadGatesInfo(_gates, _keys)
-  }, [gates, keys, uploadGatesInfo])
+    uploadGates(vault?.id as number, _gates, _keys, contract)
+    setLoading(false)
+  }, [gates, keys, vault?.id, contract])
 
   const getGateProps = useMemo(() => ({
     password: keys[keys.length - 1],
@@ -110,20 +80,7 @@ function Setup() {
     onSetComplete,
   }), [keys, gates.length, onSetNext, onSetComplete])
 
-  async function upload(){
-    try {
-      const client = await getIrys()
-      const {data, iv, salt} = await encrypt("", "test")
-      const {id: txId} = await client.upload(data, {tags: [
-        {name: "Content-Type", value: "application/json"},
-        {name: "iv", value: iv},
-        {name: "salt", value: salt}]})
-      console.log(`txId: ${txId}`)
-    } catch (error) {
-      console.error("Error uploading data:", error)
-      // Handle error here
-    }
-  }
+  
 
   function onSelectChange(value: string){
     if(!Object.values(GateType).includes(value as GateType)){
@@ -140,7 +97,7 @@ function Setup() {
     <>
       <Spin spinning={loading} size="large">
         <div className=" text-base text-white flex flex-col">
-          <div style={{marginLeft:30}}>
+          <div style={{margin: '20px 0 0 50px'}}>
             <Select
               defaultValue={gateType}
               style={{ width: 120 }}

@@ -1,8 +1,9 @@
 'use client'
 import { Button, Input } from 'antd'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { GateProps } from './GateSetup'
+import { useState } from 'react'
+import { hashMessage } from 'viem'
+import { GateData, GateProps, GateType } from './GateSetup'
 import style from './questionGate.module.css'
 
 
@@ -12,10 +13,9 @@ export type QuestionGateDataItemType = {
 }
 
 
-
-
 export default function QuestionGate(props: GateProps) {
 
+  const {onSetComplete, onSetNext, password, index: gateIndex} = props
   const [items, setItems] = useState<QuestionGateDataItemType[]>([{question: '', answer: ''}])
 //   const [checkStatus, SetCheckStatus] = useState<Boolean>(false)
   function addNewItem(){
@@ -31,29 +31,70 @@ export default function QuestionGate(props: GateProps) {
 //   }, [items]); // 当items变化时，这个useEffect会被触发
 
 
+  function changeQuestionValue(index: number, value: string){
+    setItems(prevItems => {
+      return prevItems.map((e,i) =>
+        i === index ? { ...e, question: value } : e
+      );
+    })
+  }
+
+  function changeAnswerValue(index: number, value: string){
+    setItems(prevItems => {
+      return prevItems.map((e,i) =>
+        i === index ? { ...e, answer: value } : e
+      );
+    })
+  }
+
+  function extractKey(): string{
+    if(!checkGateData()){
+      throw new Error("gate data invalid")
+    }
+    const concatedAnswers = items.map(e => e.answer).join(',')
+    return hashMessage(concatedAnswers)
+  }
+
+  function extractQuestions(): GateData{
+    if(!checkGateData()){
+      throw new Error("gate data invalid")
+    }
+    return {
+      type: GateType.QUESTION,
+      data: items.map(e => e.question),
+      index: gateIndex,
+    }
+  }
+
   /**
    * questions不为空,
    * answers不为空
    */
   function checkGateData(): Boolean{
-    return items.filter(item => item.answer && item.question).length > 0
-    
-
-    return false
+    if(!items || items.length < 1 ){
+      return false
+    }
+    const invalidItems = items.filter(e => !e.question || !e.answer)
+    if(invalidItems.length > 0){
+      return false
+    }
+    return true
   }
 
   async function setNext(){
+    console.log(`question gate setNext clicked `)
     if(!checkGateData()){
       return
     }
-    
+    console.log(`data valid`)
+    onSetNext(extractQuestions(), extractKey())
   }
 
   async function setComplete(){
     if(!checkGateData()){
       return
     }
-    
+    onSetComplete(extractQuestions(), extractKey())
   }
   
   return (
@@ -80,10 +121,16 @@ export default function QuestionGate(props: GateProps) {
               <div key={i}>
                 <span className={style.text_6}>问题{i+1}</span>
                 <div className={style.text_wrapper_2 }>
-                  <Input placeholder='请输入问题'></Input>
+                  <Input placeholder='请输入问题' onChange={(e) => { 
+                    const value = e.target.value
+                    changeQuestionValue(i, value)
+                   }}></Input>
                 </div>
                 <div className={style.text_wrapper_3 }>
-                  <Input placeholder='请输入答案'></Input>
+                  <Input placeholder='请输入答案' onChange={(e) => { 
+                    const value = e.target.value
+                    changeAnswerValue(i, value)
+                   }}></Input>
                 </div>
               </div>
             )
