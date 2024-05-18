@@ -1,9 +1,11 @@
+'use client'
+import { getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/app/utils/encryption"
 import { Select, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useMemo, useState } from "react"
 import { useConfig } from "wagmi"
 import Password3Contract, { BigIntReplacer, VaultType } from "../Contract/Password3Contract"
-import PassGate from "./PassGate"
+import PassGate, { GateType } from "./PassGate"
 import QuestionGate from "./QuestionGate"
 
 function Setup() {
@@ -12,8 +14,10 @@ function Setup() {
   const contract = useMemo(() => new Password3Contract(config) , [config])
   const [vault, setVault] = useState<VaultType|null>()
   const [loading, setLoading] = useState(true)
-  const [gateType, setGateType] = useState<'passcode'| 'question'>('passcode')
+  const [gateType, setGateType] = useState<GateType>(GateType.PASSCODE)
 
+  const iv = uint8ArrayToHex(getRandomIv())
+  const salt = uint8ArrayToHex(getRandomSalt())
 
   useEffect(() => {
     async function getVault(){
@@ -32,9 +36,10 @@ function Setup() {
 
 
   function onSelectChange(value: string){
-    if(value === 'passcode' || value === 'question'){
-      setGateType(value)
+    if(!Object.values(GateType).includes(value as GateType)){
+      return
     }
+    setGateType(value as GateType)
   }
 
   return (
@@ -43,7 +48,7 @@ function Setup() {
         <div className=" text-base text-white flex flex-col">
           <div>
           <Select
-            defaultValue="passcode"
+            defaultValue={gateType}
             style={{ width: 120 }}
             onChange={onSelectChange}
             options={[
@@ -53,8 +58,8 @@ function Setup() {
           />
           </div>
           <div>
-            { gateType === 'passcode' ? (
-              <PassGate />
+            { gateType === GateType.PASSCODE ? (
+              <PassGate props={{callback: ()=> {}, key:"", index: 0}}/>
             ) : (
               <QuestionGate />
             ) }
