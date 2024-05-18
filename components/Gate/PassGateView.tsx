@@ -9,23 +9,21 @@ import style from './passGate.module.css';
 export type GateViewProps = {
   index: number,
   onNext: (key: string) => void,
-  data?: GateData
+  data: GateData
 }
 
 
 export default function PassGateView(props: GateViewProps) {
 
   const [passcode, SetPasscode] = useState("");
-  const { onNext, index: gateIndex} = props
+  const { onNext, index: gateIndex, data: gate} = props
 
   async function setNext(){
     if(!passcode){
       return
     }
-    onNext(hashMessage(passcode))
+    onNext(hashMessage(`${passcode},${gate.rnd}`))
   }
-
-  
 
   return (
     <div className={style.page}>

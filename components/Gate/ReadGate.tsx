@@ -68,11 +68,14 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
 
   }, [rest.length, tryDecryptNextGate, router, to])
 
+  if(!gate){
+    return <></>
+  }
 
   return (
     <>
       <div> {gate?.type === GateType.PASSCODE ? (
-        <PassGateView  index={gateIndex} onNext={onNext}/>
+        <PassGateView  index={gateIndex} onNext={onNext} data={gate}/>
       ) : (
         <QuestionGateView index={gateIndex} onNext={onNext} data={gate}/>
       )} </div>

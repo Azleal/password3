@@ -1,4 +1,5 @@
 'use client'
+import { getRandomSalt, uint8ArrayToHex } from '@/tools/utils/encryption'
 import { Button, Input } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -18,6 +19,9 @@ export default function QuestionGate(props: GateProps) {
   const {onSetComplete, onSetNext, password, index: gateIndex} = props
   const [items, setItems] = useState<QuestionGateDataItemType[]>([{question: '', answer: ''}])
 //   const [checkStatus, SetCheckStatus] = useState<Boolean>(false)
+  const [rnd, setRnd] = useState(uint8ArrayToHex(getRandomSalt()))
+
+
   function addNewItem(){
     const newItem = {question: '', answer: ''}
     setItems(prevItems => [...prevItems, newItem])
@@ -51,7 +55,7 @@ export default function QuestionGate(props: GateProps) {
     if(!checkGateData()){
       throw new Error("gate data invalid")
     }
-    const concatedAnswers = items.map(e => e.answer).join(',')
+    const concatedAnswers = [...items.map(e => e.answer), rnd].join(',')
     return hashMessage(concatedAnswers)
   }
 
@@ -63,6 +67,7 @@ export default function QuestionGate(props: GateProps) {
       type: GateType.QUESTION,
       data: items.map(e => e.question),
       index: gateIndex,
+      rnd
     }
   }
 

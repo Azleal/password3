@@ -23,6 +23,7 @@ export type GateData = {
   type: GateType,
   data: string[],
   index: number,
+  rnd: string,
 }
 
 export const MAX_GATE_INDEX = 4
