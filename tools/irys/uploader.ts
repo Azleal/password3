@@ -1,8 +1,10 @@
 import Password3Contract from "@/components/Contract/Password3Contract"
 import { GateData } from "@/components/Gate/GateSetup"
 import { encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/tools/utils/encryption"
-import getIrys from "./getIrysClient"
+import getIrys, { getIrysConfig } from "./getIrysClient"
 
+
+const irysConfig = getIrysConfig()
 
 /**
  * 上传gates信息
@@ -62,7 +64,7 @@ function getTags(iv:string, salt: string, vaultId: number, type: string){
   return [
     {name: "Content-Type", value: "application/json"},
     {name: "iv", value: iv},
-    {name: "app", value: process.env.NEXT_PUBLIC_APP_NAME as string || 'test-pass3'},
+    {name: "app", value: irysConfig.appName},
     {name: "_id", value: vaultId.toString()},
     {name: "salt", value: salt},
     {name: "type", value: type}

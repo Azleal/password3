@@ -1,4 +1,5 @@
 import { WebIrys } from "@irys/sdk";
+import { Network } from "@irys/sdk/common/types";
 import { ethers } from "ethers";
 
 
@@ -28,5 +29,42 @@ const getIrys = async (
 	return webIrys;
 };
 
+declare type IrysConfig  = {
+  network: Network,
+  gqlEndpoint: string,
+  gateway: string
+  token: string,
+  providerRpc: string| undefined
+  appName: string
+
+} 
+
+/**
+ * Irys 配置
+ */
+const IrysConstants : {
+  [key: Network]: IrysConfig,
+} = {
+  'mainnet' : {
+    network : 'mainnet',
+    gqlEndpoint: 'https://arweave.mainnet.irys.xyz/graphql',
+    gateway: 'https://gateway.irys.xyz/',
+    token: 'ethereum',
+    providerRpc: undefined,
+    appName: 'password3.xyz',
+  },
+  'devnet' : {
+    network : 'devnet',
+    gqlEndpoint: 'https://arweave.devnet.irys.xyz/graphql',
+    gateway: 'https://devnet.irys.xyz/',
+    token: 'ethereum',
+    providerRpc: 'https://rpc-mumbai.maticvigil.com',
+    appName: 'dev.password3.xyz',
+  }
+}
+export function getIrysConfig(): IrysConfig{
+  const network = process.env.NEXT_PUBLIC_NETWORK || 'devnet'
+  return IrysConstants[network]
+}
 
 export default getIrys
