@@ -8,8 +8,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as React from 'react';
 import { WagmiProvider } from 'wagmi';
 import {
-  arbitrum,
-  arbitrumSepolia
+  scroll,
+  scrollSepolia
 } from 'wagmi/chains';
 
 const { wallets } = getDefaultWallets();
@@ -21,9 +21,8 @@ const config = getDefaultConfig({
     ...wallets,
   ],
   chains: [
-    arbitrum,
-    arbitrumSepolia
-    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [arbitrumSepolia] : []),
+    scroll,
+    scrollSepolia
   ],
   ssr: true,
 });
