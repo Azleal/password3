@@ -1,6 +1,6 @@
 import Password3Contract from "@/components/Contract/Password3Contract"
 import { GateData } from "@/components/Gate/GateSetup"
-import { encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "../utils/encryption"
+import { encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/tools/utils/encryption"
 import getIrys from "./getIrysClient"
 
 

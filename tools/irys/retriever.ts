@@ -1,6 +1,6 @@
 import { GateData } from "@/components/Gate/GateSetup"
+import { decryptWithIv } from "@/tools/utils/encryption"
 import axios from "axios"
-import { decryptWithIv } from "../utils/encryption"
 
 export async function readGates(vaultId: number, entrypoint: string, firstItemKey?: string){
 

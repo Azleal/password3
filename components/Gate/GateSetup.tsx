@@ -1,4 +1,4 @@
-import { uploadGates } from "@/app/irys/uploader"
+import { uploadGates } from "@/tools/irys/uploader"
 import { Select, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
