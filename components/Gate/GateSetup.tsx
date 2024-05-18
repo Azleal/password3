@@ -140,7 +140,7 @@ function Setup() {
     <>
       <Spin spinning={loading} size="large">
         <div className=" text-base text-white flex flex-col">
-          <div>
+          <div style={{marginLeft:30}}>
             <Select
               defaultValue={gateType}
               style={{ width: 120 }}

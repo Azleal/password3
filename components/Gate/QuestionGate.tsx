@@ -1,7 +1,7 @@
 'use client'
 import { Button, Input } from 'antd'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GateProps } from './GateSetup'
 import style from './questionGate.module.css'
 
@@ -17,17 +17,26 @@ export type QuestionGateDataItemType = {
 export default function QuestionGate(props: GateProps) {
 
   const [items, setItems] = useState<QuestionGateDataItemType[]>([{question: '', answer: ''}])
-
+//   const [checkStatus, SetCheckStatus] = useState<Boolean>(false)
   function addNewItem(){
     const newItem = {question: '', answer: ''}
     setItems(prevItems => [...prevItems, newItem])
   }
+
+//   useEffect(() => {
+//     // 在这里设置checkStatus
+//     const status = checkGateData()
+//     console.log(`checkStatus: ${status}`)
+//     SetCheckStatus(status);
+//   }, [items]); // 当items变化时，这个useEffect会被触发
+
 
   /**
    * questions不为空,
    * answers不为空
    */
   function checkGateData(): Boolean{
+    return items.filter(item => item.answer && item.question).length > 0
     
 
     return false
@@ -50,7 +59,6 @@ export default function QuestionGate(props: GateProps) {
   return (
     <div className={style.page}>
       <div className={style.section_1 }>
-        
         <div className={style.image_wrapper_1 }>
           <Image
             className={style.image_1}
@@ -60,18 +68,9 @@ export default function QuestionGate(props: GateProps) {
             src='/logo.png'
           />
         </div>
-        <div className={style.group_2 }>
-          <Image
-            className={style.image_2}
-            alt="image2"
-            width={288}
-            height={623}
-            src='/bg/bg8.png'
-          />
-          <span className={style.text_3}>设置后可以选择设置下一道门的密码，或者直接进入Vault</span>
-        </div>
         <div className={style.text_wrapper_1 }>
-          <span className={style.text_4}>请设置第二道门的钥匙</span>
+          <div className={style.text_setting}>请设置第二道门的钥匙</div>
+          <div className={style.text_tip}>设置后可以选择设置下一道门的密码，或者直接进入Vault</div>
         </div>
         <div className={style.group_3 }>
           <span className={style.text_5}>（最多输入十个问答）</span>
