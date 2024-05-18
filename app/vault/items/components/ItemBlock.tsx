@@ -1,6 +1,18 @@
 import "./ItemBlock.scss";
 
 export default function ItemBlock({ itemList, onEvent }: { itemList: ItemBlockType[][], onEvent: () => void }) {
+    itemList = [
+        [
+            { key: '名称', value: '钱包1' },
+            { key: '名称', value: '钱包1' },
+            { key: '名称', value: '钱包1' },
+        ],
+        [
+            { key: '名称', value: '钱包1' },
+            { key: '名称', value: '钱包1' },
+            { key: '名称', value: '钱包1' },
+        ]
+    ]
     return (
         <>
             {itemList.map((item, index) => (
