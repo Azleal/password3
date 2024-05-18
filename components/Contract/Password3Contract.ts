@@ -75,6 +75,21 @@ export default class Password3Contract{
   }
   
 
+  public async setVaultEntrypoint(vaultId: number, entrypoint: string): Promise<Hash|null>{
+    try{
+      const {request} = await simulateContract(this.config, {
+        ...wagmiContract,
+        functionName: 'setVaultEntrypoint',
+        args: [vaultId, entrypoint]
+      })
+      console.log(`setVaultEntrypoint: ${JSON.stringify(request, BigIntReplacer)}`)
+      const txHash = await writeContract(this.config,request)
+      return txHash
+    }catch(e){
+      console.error("simulating createVault with error:", e)
+    }
+    return null
+  }
 
 
   async waitForTransactionReceipt(hash: Hash) {
