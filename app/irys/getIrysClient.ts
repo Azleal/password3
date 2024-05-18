@@ -28,4 +28,5 @@ const getIrys = async (
 	return webIrys;
 };
 
+
 export default getIrys

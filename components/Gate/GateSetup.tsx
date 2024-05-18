@@ -40,7 +40,7 @@ function Setup() {
   const salt = useMemo(() => uint8ArrayToHex(getRandomSalt()), [])
 
   const [gates, setGates] = useState<GateData[]>([])
-  const [keys, setKeys] = useState<string[]>(["password3"])
+  const [keys, setKeys] = useState<string[]>([""])
 
   useEffect(() => {
     async function getVault(){
@@ -72,11 +72,18 @@ function Setup() {
     try {
       const items = await Promise.all(_gates.map(async (e,i) => {
         const key = _keys[i]
+        console.log(`key[${i}]: ${key}`)
+        if(!key){
+          return JSON.stringify(e)
+        }
         const {data} =  await encryptWithIv(key, iv, salt, JSON.stringify(e))
-        return data.toString()
+        return data
       }))
       const client = await getIrys()
-      const {id: txId} = await client.upload(JSON.stringify(items), {tags: [
+      const uploadData = JSON.stringify(items)
+      
+      console.log(`uploadData: ${uploadData}`)
+      const {id: txId} = await client.upload(uploadData, {tags: [
         {name: "Content-Type", value: "application/json"},
         {name: "iv", value: iv},
         {name: "app", value: process.env.NEXT_PUBLIC_APP_NAME as string},
