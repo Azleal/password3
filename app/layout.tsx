@@ -1,10 +1,11 @@
 import Header from '@/components/Header';
 import '@rainbow-me/rainbowkit/styles.css';
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from "next";
-import "./globals.css";
-import { Providers } from './providers';
 import Image from "next/image";
+import "./globals.css";
 import style from "./layout.module.css";
+import { Providers } from './providers';
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
             <div className={style.main_layout}>
                 <Header />
                 {children}
+                <Analytics />
                 <div className={style.main_bg}>
                     <Image
                         width={184}
