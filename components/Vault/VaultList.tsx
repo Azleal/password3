@@ -52,27 +52,9 @@ export default function VaultList({ vaults }: { vaults: VaultType[] }) {
                         <span className={style.text_6}>开始设置</span>
                       </Button>)
                   }
-                  
-                  
                 </div>
               );
             })}
-          </div>
-          <div className={style.image_wrapper_1}>
-            <Image
-              alt="image_2"
-              className={style.image_2}
-              width={184}
-              height={193}
-              src="/bg/bg1.png"
-            />
-            <Image
-              alt="image_3"
-              className={style.image_3}
-              width={154}
-              height={154}
-              src="/bg/bg5.png"
-            />
           </div>
         </div>
       </div>

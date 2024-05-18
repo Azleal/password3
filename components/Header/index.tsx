@@ -2,13 +2,14 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from "next/image";
 import Link from "next/link";
+import style from "./index.module.css";
 
 export default function Header() {
   return (
-    <div style={{height : '72px',flex:'0 0 72px'}} className="flex flex-row justify-center items-center align-middle text-base text-white">
-        <Link href="/" className="gap-2 flex flex-row  w-1/5 justify-center hover:cursor-pointer">
+    <div className={style.header_content}>
+        <Link href="/"  className={style.header_link}>
           <Image
-              className='hover:cursor-pointer'
+            className={style.header_image}
               src="/logo.png"
               alt="Password3 Logo"
               width={24}
@@ -17,9 +18,8 @@ export default function Header() {
             />
           Password3
         </Link>
-        <div className="flex flex-row w-3/5">
-        </div>
-        <div className="flex flex-row w-1/5">
+ 
+        <div className={style.connect}>
           <ConnectButton showBalance={false} chainStatus="icon" accountStatus="address"/>
         </div>
     </div>

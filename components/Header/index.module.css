@@ -1,0 +1,32 @@
+.header_content {
+    display: flex;
+    justify-content: space-between;
+    height: 72px;
+    flex: 0 0 72px;
+}
+
+.header_link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    
+}
+.header_image {
+    margin-right: 5px;
+}
+.connect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+}
