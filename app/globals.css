@@ -24,7 +24,10 @@ body {
   background-position: 70.06rem 20.75rem, 31.94rem 45.88rem;
   background-size: 35rem 28.32rem, 88.09rem 21.64rem; */
 }
-
+body>div {
+  height: 100vh;
+  position: relative;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

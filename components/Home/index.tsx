@@ -7,8 +7,8 @@ export default function HomePage() {
   return (
     <div className={style.box_1}>
       <div className={style.block_2} />
-      <span className={style.text_4}>Password3</span>
-      <span className={style.text_5}>用来保存您的账号密码数据</span>
+      <div className={style.text_4}>Password3</div>
+      <div className={style.text_5}>用来保存您的账号密码数据</div>
       <div className={style.block_3}>
         <div className={style.section_1}>
           <span className={style.text_6}>通过加密来将您的信息保存在本地</span>
@@ -21,21 +21,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <Image
-          width={184}
-          height={193}
-          className={style.image_1}
-          alt="image_1"
-          src="/bg/bg1.png"
-        />
       </div>
-      <Image
-        className={style.image_2}
-        width={152}
-          height={270}
-        alt="image_2"
-        src="/bg/bg2.png"
-      />
       <div className={style.block_4}>
         <div className={style.box_2} />
       </div>

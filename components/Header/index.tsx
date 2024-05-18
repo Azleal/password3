@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <div style={{height : '72px'}} className="flex flex-row justify-center items-center align-middle text-base text-white">
+    <div style={{height : '72px',flex:'0 0 72px'}} className="flex flex-row justify-center items-center align-middle text-base text-white">
         <Link href="/" className="gap-2 flex flex-row  w-1/5 justify-center hover:cursor-pointer">
           <Image
               className='hover:cursor-pointer'
