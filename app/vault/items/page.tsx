@@ -5,19 +5,25 @@ import VaultTip from "./components/VaultTip"
 import ItemBlock from "./components/ItemBlock"
 import AddItemBlock from "./components/AddItemBlock"
 import style from "./index.module.css";
+import { useState } from "react";
 export default function OpenVault() {
     const router = useRouter()
+    const [open, SetOpen] = useState(false)
     const handleClickItem = () => {
-        console.log(`OpenVault: handleClickItem, item:`)
+        SetOpen(true)
+    }
+    const handleAddItem = (isOpen:boolean,list: ItemBlockType[]) => {
+        console.log(`OpenVault: handleAddItem, list:`, list)
+        SetOpen(isOpen)
     }
 
     return (
         <div className={style.page}>
             <div className={style.content} >
-                <VaultTip onEvent={handleClickItem} title="钱包1" />
+                <VaultTip onEvent={handleClickItem} title="钱包" />
                 <ItemBlock onEvent={handleClickItem} itemList={[]} />
             </div>
-            <AddItemBlock onEvent={handleClickItem} itemList={[]} />
+            {open&&<AddItemBlock onEvent={handleAddItem}  />}
         </div>
 
     )
