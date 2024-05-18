@@ -51,7 +51,7 @@ export default function PassGate(props: GateProps) {
                     <div className={style.text_tip}>设置后可以选择设置下一道门的密码，或者完成设置</div>
 
                     <Input className={style.text_5}
-                        placeholder='请输入要设置的密码' value={passcode} onChange={(e) => { SetPasscode(e.target.value) }} />
+                        placeholder='请输入要设置的口令' value={passcode} onChange={(e) => { SetPasscode(e.target.value) }} />
                     
                     <div className={style.button_box}>
                         {gateIndex < MAX_GATE_INDEX ? (<div className={style.text_wrapper_1}>

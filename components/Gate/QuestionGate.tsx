@@ -107,7 +107,7 @@ export default function QuestionGate(props: GateProps) {
           />
         </div>
         <div className={style.text_wrapper_1 }>
-          <div className={style.text_setting}>请设置第二道门的钥匙</div>
+          <div className={style.text_setting}>请设置第{gateIndex + 1}道门的钥匙</div>
           <div className={style.text_tip}>设置后可以选择设置下一道门的密码，或者直接进入Vault</div>
         </div>
         <div className={style.group_3 }>
