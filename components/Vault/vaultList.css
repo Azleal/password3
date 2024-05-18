@@ -105,7 +105,6 @@
 .image_1 {
   width: 74px;
   height: 68px;
-  margin: 48px 0 0 261px;
 }
 
 .text_4 {
@@ -119,7 +118,7 @@
   text-align: center;
   white-space: nowrap;
   line-height: 45px;
-  margin: 26px 0 0 86px;
+  margin: 26px 0 0 0;
 }
 
 .text_5 {
@@ -130,10 +129,10 @@
   font-size: 16px;
   font-family: PingFangSC-Regular;
   font-weight: normal;
-  text-align: left;
+  text-align: center;
   white-space: nowrap;
   line-height: 22px;
-  margin: 12px 0 0 203px;
+  margin: 12px 0 0 0;
 }
 
 .text-wrapper_2 {
@@ -141,7 +140,7 @@
   border-radius: 8px;
   height: 48px;
   width: 130px;
-  margin: 29px 0 40px 235px;
+  margin: 29px 0 40px 0;
 }
 
 .text_6 {
@@ -155,7 +154,6 @@
   text-align: center;
   white-space: nowrap;
   line-height: 22px;
-  margin: 13px 0 0 16px;
 }
 
 .image-wrapper_1 {
