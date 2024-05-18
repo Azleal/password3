@@ -16,7 +16,8 @@ export default function VaultList({ vaults }: { vaults: VaultType[] }) {
 
 
   function onEnterClicked(vault: VaultType){
-    
+    setLoading(true)
+    router.push(`/vault/open?vault=${vault.id}`)
   }
 
   

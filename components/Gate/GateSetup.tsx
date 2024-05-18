@@ -1,5 +1,5 @@
 import getIrys from "@/app/irys/getIrysClient"
-import { encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/app/utils/encryption"
+import { encrypt, encryptWithIv, getRandomIv, getRandomSalt, uint8ArrayToHex } from "@/app/utils/encryption"
 import { Select, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
@@ -79,7 +79,7 @@ function Setup() {
       const {id: txId} = await client.upload(JSON.stringify(items), {tags: [
         {name: "Content-Type", value: "application/json"},
         {name: "iv", value: iv},
-        {name: "app", value:"password3"},
+        {name: "app", value: process.env.NEXT_PUBLIC_APP_NAME as string},
         {name: "_id", value: vault?.id.toString() as string},
         {name: "salt", value: salt}]})
       console.log(`txId: ${txId}`)
