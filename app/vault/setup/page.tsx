@@ -1,12 +1,14 @@
 'use client'
-import PassGate from "@/components/Gate/PassGate";
+
+import GateSetup from "@/components/Gate/GateSetup"
 
 export default function VaultSetUp() {
    
 
   return (
     <>
-      <PassGate/>
+      {/* <PassGate/> */}
+      <GateSetup/>
     </>
   )
 }

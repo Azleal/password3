@@ -22,13 +22,32 @@ export default class Password3Contract{
   }
    
   public async getUserVaults(address: string): Promise<VaultType[]>{
-    const vaults: any[] = (await readContract(this.config, {
+    const vaults: VaultType[] = (await readContract(this.config, {
       ...wagmiContract,
       functionName: 'getUserVaults',
       args: [address],
     })) as VaultType[]
     console.log(`vaults: ${JSON.stringify(vaults,BigIntReplacer)}`)
     return vaults
+  }
+
+  public async getVault(vaultId: BigInt): Promise<VaultType|null>{
+    console.log(`getVault: ${vaultId}`)
+    const vault: any[] = (await readContract(this.config, {
+      ...wagmiContract,
+      functionName: 'vaultMapping',
+      args: [vaultId],
+    })) as any[]
+    if(vault[0] === 0n){
+      return null
+    }
+    return {
+      id: vault[0],
+      owner: vault[1],
+      createdAt: vault[2],
+      title: vault[3],
+      entrypoint: vault[4],
+    }
   }
 
   public async getTotalVaultsCount(): Promise<BigInt>{

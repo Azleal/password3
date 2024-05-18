@@ -3,7 +3,7 @@ import Password3Contract, { VaultType } from "@/components/Contract/Password3Con
 import NoVault from "@/components/Vault/NoVault";
 import VaultList from "@/components/Vault/VaultList";
 import { Spin } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Address } from "viem";
 import { useAccount, useConfig } from "wagmi";
 
@@ -13,19 +13,20 @@ export default function Vault() {
   const [vaults, setVaults] = useState<VaultType[]>([])
   const [loading, setLoading] = useState(true)
   
-  const contract = new Password3Contract(config)
+  const contract = useMemo(() => new Password3Contract(config), [config]) 
+  
   useEffect(() => {
     async function getVaults(address: Address){
       const v = await contract.getUserVaults(address)
       setVaults(v)
       setLoading(false)
     }
-    if(!address){
+    if(!address || !contract){
       return
     }
     setLoading(true)
     getVaults(address)
-  }, [address])
+  }, [address, contract])
 
   if(loading){
     return (<div className="flex flex-row w-full h-full align-middle justify-center items-center">

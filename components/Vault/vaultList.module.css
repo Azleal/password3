@@ -6,95 +6,28 @@
 }
 
 .box_1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100%;
-  background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng43beaf37e4b010df118a8a561d1e0372df3bbe0276c2a62a4da903cb79eacb88)
+  width: 100%;
+  background: url(/bg/bg7.png)
     100% no-repeat;
   background-size: 100% 100%;
-  width: 100%;
-}
-
-.block_1 {
-  width: 1848px;
-  height: 40px;
-  margin: 16px 0 0 37px;
-}
-
-.label_1 {
-  width: 40px;
-  height: 40px;
-}
-
-.text_1 {
-  width: 105px;
-  height: 27px;
-  overflow-wrap: break-word;
-  color: rgba(255, 255, 255, 1);
-  font-size: 20px;
-  font-family: Avenir-Heavy;
-  font-weight: 900;
-  text-align: left;
-  white-space: nowrap;
-  line-height: 27px;
-  margin: 7px 0 0 12px;
-}
-
-.block_2 {
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 8px;
-  width: 72px;
-  height: 36px;
-  margin: 2px 0 0 1489px;
-}
-
-.text_2 {
-  width: 28px;
-  height: 20px;
-  overflow-wrap: break-word;
-  color: rgba(15, 30, 84, 1);
-  font-size: 14px;
-  font-family: PingFangSC-Regular;
-  font-weight: normal;
-  text-align: left;
-  white-space: nowrap;
-  line-height: 20px;
-  margin: 8px 0 0 12px;
-}
-
-.thumbnail_1 {
-  width: 20px;
-  height: 20px;
-  margin: 8px 12px 0 0;
-}
-
-.text-wrapper_1 {
-  background-color: rgba(77, 77, 255, 1);
-  border-radius: 8px;
-  height: 40px;
-  margin-left: 16px;
-  width: 114px;
-}
-
-.text_3 {
-  width: 63px;
-  height: 20px;
-  overflow-wrap: break-word;
-  color: rgba(255, 255, 255, 1);
-  font-size: 14px;
-  font-family: PingFangSC-Semibold;
-  font-weight: 600;
-  text-align: left;
-  white-space: nowrap;
-  line-height: 20px;
-  margin: 10px 0 0 26px;
 }
 
 .block_3 {
+  display: flex;
+  flex-direction: row;
   width: 600px;
   height: 338px;
-  margin: 150px 0 0 661px;
+  margin: 50px 0 0 0;
 }
 
 .section_1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
   width: 600px;
@@ -135,7 +68,10 @@
   margin: 12px 0 0 0;
 }
 
-.text-wrapper_2 {
+.text_wrapper_2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: rgba(77, 77, 255, 1);
   border-radius: 8px;
   height: 48px;
@@ -156,7 +92,10 @@
   line-height: 22px;
 }
 
-.image-wrapper_1 {
+.image_wrapper_1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 1077px;
   height: 305px;
   margin: 93px 0 0px 449px;
