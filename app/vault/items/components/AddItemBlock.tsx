@@ -31,6 +31,7 @@ export default function AddItemBlock({ onEvent }: { onEvent: (open: boolean, lis
     };
     const handleInput = (type: string, index: number, value: string) => {
         console.log(`AddItemBlock: handleInput, value:`, type, index, value)
+        // @ts-ignore
         itemList[index][type] = value
         setItemList([...itemList])
     }
