@@ -5,7 +5,7 @@ const abi = [{"inputs":[],"name":"InvalidInitialization","type":"error"},{"input
 
 
 const contracts : { [key: string]: `0x${string}` }= {
-  'devnet' : "0x0CE50029FB31DA7B072c52637919a1D0f8881360",
+  'devnet' : "0xA53Bef4Af0B2A17137a1c390395a0f9Adb571f0D",
   'mainnet' : "0x0",
 }
 

@@ -39,9 +39,9 @@ export async function readVaultItems(vaultId: number, owner: Address, key: strin
   const queryClient = new Query({ url: irysConfig.gqlEndpoint });
     const result = await queryClient
         .search("irys:transactions")
-        .from([owner])
+        // .from([owner])
         .tags([
-              { name: "appName", values: [irysConfig.appName] },
+              { name: "app", values: [irysConfig.appName] },
               { name: "type", values: ["item"] },
               { name: "_id", values: [vaultId.toString()] },
               ])
