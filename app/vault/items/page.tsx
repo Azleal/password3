@@ -10,6 +10,7 @@ import { useAccount, useConfig } from "wagmi";
 import { readVaultItems } from "@/tools/irys/retriever";
 import Password3Contract, { BigIntReplacer, VaultType } from "@/components/Contract/Password3Contract";
 import { Address } from "viem/accounts";
+import {uploadVaultItem} from "@/tools/irys/uploader"
 export default function OpenVault() {
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
@@ -73,12 +74,17 @@ export default function OpenVault() {
         if (!list.length) {
             return
         }
+        const data = JSON.stringify(list)
+        console.log(`OpenVault: handleAddItem`, data)
+        if(vaultId && _key){
+            uploadVaultItem(vaultId,_key, data)
+        }
         setItemList([...itemList, list])
     }
 
     function handleUpload() {
         console.log(`OpenVault: handleUpload` , itemList)
-        throw new Error("Function not implemented.");
+        const data = JSON.stringify(itemList)
     }
 
     return (
