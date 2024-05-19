@@ -8,7 +8,6 @@ import Password3Contract, { VaultType } from "../Contract/Password3Contract";
 import { GateData, GateType } from "./GateSetup";
 import PassGateView from "./PassGateView";
 import QuestionGateView from "./QuestionGateView";
-import { useRouter as useRoute } from 'next/router'
 
         
 

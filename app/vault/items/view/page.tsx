@@ -6,10 +6,10 @@ import { uploadVaultItem } from "@/tools/irys/uploader";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useAccount, useConfig } from "wagmi";
-import AddItemBlock from "./components/AddItemBlock";
-import ItemBlock from "./components/ItemBlock";
-import VaultTip from "./components/VaultTip";
-import style from "./index.module.css";
+import AddItemBlock from "../components/AddItemBlock";
+import ItemBlock from "../components/ItemBlock";
+import VaultTip from "../components/VaultTip";
+import style from "../index.module.css";
 function VaultItems() {
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
@@ -67,6 +67,7 @@ function VaultItems() {
         if(decryptedData.length > 0){
             setItemList([...decryptedData])
         }
+
     }
 
 
@@ -75,7 +76,7 @@ function VaultItems() {
         if (type === 'add') {
             SetOpen(true)
         } else {
-            router.push(`/vault/items/view?vault=${vaultId}&key=${_key}`)
+            
 
         }
     }
@@ -96,7 +97,7 @@ function VaultItems() {
         <Suspense>
             <div className={style.page}>
                 <div className={style.content} >
-                    <VaultTip onEvent={handleClickItem} type='edit' title={vaults?.title} />
+                    <VaultTip onEvent={handleClickItem} type='view' title={vaults?.title} />
                     <ItemBlock onEvent={() => { }} itemList={itemList} />
                 </div>
                 {open && <AddItemBlock onEvent={handleAddItem} />}
