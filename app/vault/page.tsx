@@ -1,19 +1,21 @@
 'use client'
-import Password3Contract, { VaultType } from "@/components/Contract/Password3Contract";
+import { VaultType } from "@/components/Contract/Password3Contract";
+import usePasswordContract from "@/components/Contract/usePasswordContract";
 import NoVault from "@/components/Vault/NoVault";
 import VaultList from "@/components/Vault/VaultList";
 import { Spin } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Address } from "viem";
-import { useAccount, useConfig } from "wagmi";
+import { useAccount } from "wagmi";
 
 export default function Vault() {
   const {address} = useAccount()
-  const config = useConfig()
+  // const config = useConfig()
   const [vaults, setVaults] = useState<VaultType[]>([])
   const [loading, setLoading] = useState(true)
+  const contract = usePasswordContract()
   
-  const contract = useMemo(() => new Password3Contract(config), [config]) 
+  // const contract = useMemo(() => new Password3Contract(config), [config]) 
   
   useEffect(() => {
     async function getVaults(address: Address){
@@ -26,7 +28,7 @@ export default function Vault() {
     }
     setLoading(true)
     getVaults(address)
-  }, [address, contract])
+  }, [address])
 
   if(loading){
     return (<div className="flex flex-row w-full h-full align-middle justify-center items-center">
