@@ -1,16 +1,16 @@
 'use client'
 
-import VaultTip from "./components/VaultTip"
-import ItemBlock from "./components/ItemBlock"
-import AddItemBlock from "./components/AddItemBlock"
-import style from "./index.module.css";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation"
-import { useAccount, useConfig } from "wagmi";
-import { readVaultItems } from "@/tools/irys/retriever";
 import Password3Contract, { BigIntReplacer, VaultType } from "@/components/Contract/Password3Contract";
-import { uploadVaultItem } from "@/tools/irys/uploader"
-export default function OpenVault() {
+import { readVaultItems } from "@/tools/irys/retriever";
+import { uploadVaultItem } from "@/tools/irys/uploader";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useAccount, useConfig } from "wagmi";
+import AddItemBlock from "./components/AddItemBlock";
+import ItemBlock from "./components/ItemBlock";
+import VaultTip from "./components/VaultTip";
+import style from "./index.module.css";
+function VaultItems() {
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
     const { address } = useAccount()
@@ -103,4 +103,13 @@ export default function OpenVault() {
         </Suspense>
 
     )
+}
+
+
+export default function SupressedVaultItems(){
+  return (
+    <Suspense>
+      <VaultItems/>
+    </Suspense>
+  )
 }
