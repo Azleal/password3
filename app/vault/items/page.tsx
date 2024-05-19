@@ -4,7 +4,7 @@ import VaultTip from "./components/VaultTip"
 import ItemBlock from "./components/ItemBlock"
 import AddItemBlock from "./components/AddItemBlock"
 import style from "./index.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation"
 import { useAccount, useConfig } from "wagmi";
 import { readVaultItems } from "@/tools/irys/retriever";
@@ -87,18 +87,20 @@ export default function OpenVault() {
     }
 
     return (
-        <div className={style.page}>
-            <div className={style.content} >
-                <VaultTip onEvent={handleClickItem} title={vaults?.title} />
-                <ItemBlock onEvent={handleClickItem} itemList={itemList} />
+        <Suspense>
+            <div className={style.page}>
+                <div className={style.content} >
+                    <VaultTip onEvent={handleClickItem} title={vaults?.title} />
+                    <ItemBlock onEvent={handleClickItem} itemList={itemList} />
 
-                <div className={style.upload}>
-                    <button onClick={handleUpload}>上传</button>
+                    <div className={style.upload}>
+                        <button onClick={handleUpload}>上传</button>
+                    </div>
+
                 </div>
-
+                {open && <AddItemBlock onEvent={handleAddItem} />}
             </div>
-            {open && <AddItemBlock onEvent={handleAddItem} />}
-        </div>
+        </Suspense>
 
     )
 }
