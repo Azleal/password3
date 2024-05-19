@@ -23,13 +23,42 @@
     margin-top: 20px;
 }
 
+.tip_text {
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+
+}
+
+.button_add {
+    background:rgba(77, 77, 255, 1);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.button_add button:hover {
+    background: #7289da;
+}
+
+.button_share {
+    background:#1F1F28;
+    border: 1px solid #fff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 20px;
+
+}
 .button {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: rgba(77, 77, 255, 1);
-    border-radius: 8px;
-    height: 48px;
-    width: 130px;
-    margin: 29px 0 40px 0;
+    justify-content: center;
+    margin-top: 20px;
 }

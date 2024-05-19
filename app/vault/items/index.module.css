@@ -30,15 +30,3 @@
     padding-right: 40px;
     
 }
-.upload button {
-    background:rgba(77, 77, 255, 1);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.upload button:hover {
-    background: #7289da;
-}

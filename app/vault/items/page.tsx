@@ -18,7 +18,7 @@ function VaultItems() {
     const _vaualtId = searchParams.get("vault")
     const _key = searchParams.get("key")
     const vaultId = _vaualtId ? Number(_vaualtId) : null;
-    console.log(`OpenVault: vaultId:`, vaultId, address, _key)
+
 
 
     const config = useConfig()
@@ -32,6 +32,7 @@ function VaultItems() {
         if (!contract || !vaultId) { // Add a check for vaults
             return
         }
+        console.log(`OpenVault: vaultId:`, vaultId, address, _key)
         setLoading(true)
         getDecryptedData()
         !vaults && getVault(vaultId)
@@ -41,6 +42,7 @@ function VaultItems() {
     async function getVault(vaultId: number) {
         try {
             const vault = await contract.getVault(BigInt(vaultId))
+            address && contract.getUserVaults(address)
             console.log(`getVault===: ${vaultId}`)
             if (!vault) {
                 return
@@ -64,9 +66,13 @@ function VaultItems() {
     }
 
 
-    const handleClickItem = () => {
-        SetOpen(true)
+    const handleClickItem = (type: string) => {
         console.log(`OpenVault: handleClickItem`)
+        if (type === 'add') {
+            SetOpen(true)
+        } else {
+
+        }
     }
     const handleAddItem = (isOpen: boolean, list: ItemBlockType[]) => {
         SetOpen(isOpen)
@@ -81,22 +87,12 @@ function VaultItems() {
         setItemList([...itemList, list])
     }
 
-    function handleUpload() {
-        console.log(`OpenVault: handleUpload`, itemList)
-        const data = JSON.stringify(itemList)
-    }
-
     return (
         <Suspense>
             <div className={style.page}>
                 <div className={style.content} >
                     <VaultTip onEvent={handleClickItem} title={vaults?.title} />
-                    <ItemBlock onEvent={handleClickItem} itemList={itemList} />
-
-                    <div className={style.upload}>
-                        <button onClick={handleUpload}>上传</button>
-                    </div>
-
+                    <ItemBlock onEvent={() => { }} itemList={itemList} />
                 </div>
                 {open && <AddItemBlock onEvent={handleAddItem} />}
             </div>
@@ -106,10 +102,10 @@ function VaultItems() {
 }
 
 
-export default function SupressedVaultItems(){
-  return (
-    <Suspense>
-      <VaultItems/>
-    </Suspense>
-  )
+export default function SupressedVaultItems() {
+    return (
+        <Suspense>
+            <VaultItems />
+        </Suspense>
+    )
 }
