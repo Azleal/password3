@@ -63,6 +63,7 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
       return
     }
     console.log(`no gates left`)
+    console.log(`redirect to ${to}  key: ${key}`)
     //redirect page
     router.push(to)
 

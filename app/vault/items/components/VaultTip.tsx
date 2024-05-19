@@ -2,7 +2,7 @@ import { Button } from "antd";
 import Image from "next/image";
 import style from "./VaultTip.module.css";
 
-export default function VaultList({ title, onEvent }: { title: string, onEvent: () => void }) {
+export default function VaultList({ title, onEvent }: { title: string|undefined, onEvent: () => void }) {
     return (
         <div className={style.tip_content}>
             <Image
