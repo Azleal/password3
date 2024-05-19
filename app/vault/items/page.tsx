@@ -10,6 +10,7 @@ import AddItemBlock from "./components/AddItemBlock";
 import ItemBlock from "./components/ItemBlock";
 import VaultTip from "./components/VaultTip";
 import style from "./index.module.css";
+import { Spin } from "antd";
 function VaultItems() {
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
@@ -62,10 +63,15 @@ function VaultItems() {
         if (!vaultId || !address || !_key) {
             return
         }
-        const decryptedData = await readVaultItems(vaultId, address, _key)
-        console.log(`OpenVault: decryptedData:`, decryptedData)
-        if(decryptedData.length > 0){
-            setItemList([...decryptedData])
+        try {
+            const decryptedData = await readVaultItems(vaultId, address, _key)
+            console.log(`OpenVault: decryptedData:`, decryptedData)
+            if (decryptedData.length > 0) {
+                setItemList([...decryptedData])
+            }
+
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -93,7 +99,7 @@ function VaultItems() {
     }
 
     return (
-        <Suspense>
+        <Spin spinning={loading} size="large">
             <div className={style.page}>
                 <div className={style.content} >
                     <VaultTip onEvent={handleClickItem} type='edit' title={vaults?.title} />
@@ -101,7 +107,7 @@ function VaultItems() {
                 </div>
                 {open && <AddItemBlock onEvent={handleAddItem} />}
             </div>
-        </Suspense>
+        </Spin>
 
     )
 }
