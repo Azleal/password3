@@ -8,6 +8,7 @@ import Password3Contract, { VaultType } from "../Contract/Password3Contract";
 import { GateData, GateType } from "./GateSetup";
 import PassGateView from "./PassGateView";
 import QuestionGateView from "./QuestionGateView";
+import { useRouter as useRoute } from 'next/router'
 
         
 
@@ -58,14 +59,14 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
 
   const onNext = useCallback(async (key: string) => {
     if(rest.length > 0){
+      setLoading(false)
       setGateIndex(prev => prev + 1)
       await tryDecryptNextGate(key)
       return
     }
     console.log(`no gates left`)
-    console.log(`redirect to ${to}  key: ${key}`)
     //redirect page
-    router.push(to)
+    router.push(`${to}?vault=${vaultId}&key=${key}`)
 
   }, [rest.length, tryDecryptNextGate, router, to])
 
