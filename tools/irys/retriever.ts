@@ -62,7 +62,7 @@ export async function readVaultItems(vaultId: number, owner: Address, key: strin
           console.log(`read vault items iv: ${iv}, salt: ${salt}`)
 
           console.log(`read vault items result: ${JSON.stringify(data)}`)
-          const decrypted = await decryptWithIv(key, iv, salt, data)
+          const decrypted = await decryptWithIv(key, iv, salt, Buffer.from(data.data))
           return JSON.parse(decrypted) as any
         }))
         
