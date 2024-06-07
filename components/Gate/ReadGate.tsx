@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Address } from "viem";
 import { useAccount, useConfig } from "wagmi";
 import Password3Contract, { VaultType } from "../Contract/Password3Contract";
+import useKeyStorage from "../Storage/useKeyStorage";
 import { GateData, GateType } from "./GateSetup";
 import PassGateView from "./PassGateView";
 import QuestionGateView from "./QuestionGateView";
@@ -23,6 +24,7 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
   
   const contract = useMemo(() => new Password3Contract(config), [config]) 
   const router = useRouter()
+  const {keyStorage} = useKeyStorage()
   
 
   const tryDecryptNextGate = useCallback(async (key: string)=> {
@@ -65,7 +67,8 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
     }
     console.log(`no gates left`)
     //redirect page
-    router.push(`${to}?vault=${vaultId}&key=${key}`)
+    keyStorage.set(vaultId, key)
+    router.push(`${to}?vault=${vaultId}`)
 
   }, [rest.length, tryDecryptNextGate, router, to])
 

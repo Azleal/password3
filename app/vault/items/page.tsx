@@ -1,79 +1,83 @@
 'use client'
 
-import Password3Contract, { BigIntReplacer, VaultType } from "@/components/Contract/Password3Contract";
+import { BigIntReplacer, VaultType } from "@/components/Contract/Password3Contract";
+import usePasswordContract from "@/components/Contract/usePasswordContract";
+import useKeyStorage from "@/components/Storage/useKeyStorage";
 import { readVaultItems } from "@/tools/irys/retriever";
 import { uploadVaultItem } from "@/tools/irys/uploader";
-import { useSearchParams, useRouter } from "next/navigation";
+import { Spin } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useAccount, useConfig } from "wagmi";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
 import AddItemBlock from "./components/AddItemBlock";
 import ItemBlock from "./components/ItemBlock";
 import VaultTip from "./components/VaultTip";
 import style from "./index.module.css";
-import { Spin } from "antd";
 function VaultItems() {
+
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
     const { address } = useAccount()
     const searchParams = useSearchParams()
-    const _vaualtId = searchParams.get("vault")
-    const _key = searchParams.get("key")
-    const vaultId = _vaualtId ? Number(_vaualtId) : null;
+    const vaultId = searchParams.get("vault") ? Number(searchParams.get("vault")) : null;
 
-
-
-    const config = useConfig()
-    const [vaults, setVaults] = useState<VaultType>()
+    const [vault, setVault] = useState<VaultType>()
     const [loading, setLoading] = useState(true)
     const router = useRouter()
 
-    const contract = useMemo(() => new Password3Contract(config), [config])
+    const contract = usePasswordContract()
+    const {loaded, keyStorage} = useKeyStorage()
 
+    const keyStorageMemo = useMemo(() => keyStorage, [keyStorage])
 
     useEffect(() => {
-        if (!contract || !vaultId) { // Add a check for vaults
-            return
-        }
-        console.log(`OpenVault: vaultId:`, vaultId, address, _key)
-        setLoading(true)
-        getDecryptedData()
-        !vaults && getVault(vaultId)
-    }, [address, contract, vaults]) // Include vaults in the dependency array
-
-
-    async function getVault(vaultId: number) {
+      async function getVault(vaultId: number) {
         try {
-            const vault = await contract.getVault(BigInt(vaultId))
-            address && contract.getUserVaults(address)
-            console.log(`getVault===: ${vaultId}`)
+            const vault = await contract.getVault(vaultId)
             if (!vault) {
                 return
             }
-            console.log(`useeffect vault: ${JSON.stringify(vault, BigIntReplacer)}`)
-            setVaults(vault)
+            console.log(`query vault[${vaultId}]: ${JSON.stringify(vault, BigIntReplacer)}`)
+            setVault(vault)
         } catch (error) {
             console.error("Error fetching vault:", error)
-            // Handle error here
         } finally {
             setLoading(false)
         }
-    }
+      }
+      if(!vaultId || !contract){
+        return
+      }
+      getVault(vaultId)
+    }, [vaultId, contract])
 
-    const getDecryptedData = async () => {
-        if (!vaultId || !address || !_key) {
+
+    useEffect(() => {
+      if (!contract || !vault || !loaded) { // Add a check for vaults
+        return
+      }
+      async function getDecryptedData (vault: VaultType, vaultKey: string ) {
+        if (!vault) {
             return
         }
+        const {id, owner} = vault
         try {
-            const decryptedData = await readVaultItems(vaultId, address, _key)
+            const decryptedData = await readVaultItems(id, owner as Address, vaultKey)
             console.log(`OpenVault: decryptedData:`, decryptedData)
             if (decryptedData.length > 0) {
                 setItemList([...decryptedData])
             }
-
         } finally {
             setLoading(false)
         }
-    }
+      }
+      const {id: vaultId} = vault
+      const vaultKey = keyStorageMemo.get(vaultId)
+      console.log(`OpenVault: vaultId: ${vaultId}, with key ${vaultKey}`)
+      setLoading(true)
+      getDecryptedData(vault, vaultKey)
+    }, [address, contract, loaded, vault, keyStorageMemo]) // Include vaults in the dependency array
 
 
     const handleClickItem = (type: string) => {
@@ -81,7 +85,7 @@ function VaultItems() {
         if (type === 'add') {
             SetOpen(true)
         } else {
-            router.push(`/vault/items/view?vault=${vaultId}&key=${_key}`)
+            router.push(`/vault/items/view?vault=${vaultId}`)
 
         }
     }
@@ -92,8 +96,9 @@ function VaultItems() {
         }
         const data = JSON.stringify(list)
         console.log(`OpenVault: handleAddItem`, data)
-        if (vaultId && _key) {
-            uploadVaultItem(vaultId, _key, data)
+        if (vaultId) {
+            const vaultKey = keyStorageMemo.get(vaultId)
+            uploadVaultItem(vaultId, vaultKey, data)
         }
         setItemList([...itemList, list])
     }
@@ -102,7 +107,7 @@ function VaultItems() {
         <Spin spinning={loading} size="large">
             <div className={style.page}>
                 <div className={style.content} >
-                    <VaultTip onEvent={handleClickItem} type='edit' title={vaults?.title} />
+                    <VaultTip onEvent={handleClickItem} type='edit' title={vault?.title} />
                     <ItemBlock onEvent={() => { }} itemList={itemList} />
                 </div>
                 {open && <AddItemBlock onEvent={handleAddItem} />}

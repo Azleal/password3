@@ -39,7 +39,7 @@ export async function readVaultItems(vaultId: number, owner: Address, key: strin
   const queryClient = new Query({ url: irysConfig.gqlEndpoint });
     const result = await queryClient
         .search("irys:transactions")
-        // .from([owner])
+        .from([owner])
         .tags([
               { name: "app", values: [irysConfig.appName] },
               { name: "type", values: ["item"] },
@@ -54,16 +54,21 @@ export async function readVaultItems(vaultId: number, owner: Address, key: strin
         const itemTxIds = result.map(e => e.id)
 
         const items = await Promise.all(itemTxIds.map(async (txId,i) => {
-          const {data} = await axios.get(`${irysConfig.gateway}${txId}`)
-
-          const {data:{tags}} : {data: {tags: { name: string, value: string }[]}}  = await axios.get(`${irysConfig.gateway}tx/${txId}`)
-          const iv = tags.filter(e => e["name"] === 'iv')[0].value
-          const salt = tags.filter(e => e["name"] === 'salt')[0].value
-          console.log(`read vault items iv: ${iv}, salt: ${salt}`)
-
-          console.log(`read vault items result: ${JSON.stringify(data)}`)
-          const decrypted = await decryptWithIv(key, iv, salt, Buffer.from(data.data))
-          return JSON.parse(decrypted) as any
+          try{
+            const {data} = await axios.get(`${irysConfig.gateway}${txId}`)
+  
+            const {data:{tags}} : {data: {tags: { name: string, value: string }[]}}  = await axios.get(`${irysConfig.gateway}tx/${txId}`)
+            const iv = tags.filter(e => e["name"] === 'iv')[0].value
+            const salt = tags.filter(e => e["name"] === 'salt')[0].value
+            console.log(`read vault items iv: ${iv}, salt: ${salt}`)
+  
+            console.log(`read vault items result: ${JSON.stringify(data)}`)
+            const decrypted = await decryptWithIv(key, iv, salt, Buffer.from(data.data))
+            console.log(`read vault items decrypted result: ${JSON.stringify(decrypted)}`)
+            return JSON.parse(decrypted) as any
+          }catch(e){
+            return {key: "error", value: "解密异常"}
+          }
         }))
         
         return items

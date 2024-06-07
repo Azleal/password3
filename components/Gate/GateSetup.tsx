@@ -2,8 +2,8 @@ import { uploadGates } from "@/tools/irys/uploader"
 import { Select, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react"
-import { useConfig } from "wagmi"
-import Password3Contract, { BigIntReplacer, VaultType } from "../Contract/Password3Contract"
+import { BigIntReplacer, VaultType } from "../Contract/Password3Contract"
+import usePasswordContract from "../Contract/usePasswordContract"
 import PassGate from "./PassGate"
 import QuestionGate from "./QuestionGate"
 
@@ -30,8 +30,7 @@ export const MAX_GATE_INDEX = 4
 
 function Setup() {
   const searchParams = useSearchParams()
-  const config = useConfig()
-  const contract = useMemo(() => new Password3Contract(config) , [config])
+  const contract = usePasswordContract()
   const [vault, setVault] = useState<VaultType|null>()
   const [loading, setLoading] = useState(true)
   const [gateType, setGateType] = useState<GateType>(GateType.PASSCODE)
@@ -60,12 +59,13 @@ function Setup() {
     getVault()
   }, [searchParams, contract])
 
+  //点击继续
   const onSetNext = useCallback((gateData: GateData, nextKey: string) => {
     setGates(prevGates => [...prevGates, gateData])
     setKeys(prevKeys => [...prevKeys, nextKey])
-    console.log('here entered')
   }, [])
 
+  // 点击完成设置
   const onSetComplete = useCallback((gateData: GateData, nextKey: string) => {
     setLoading(true)
     const _gates = [...gates, gateData]

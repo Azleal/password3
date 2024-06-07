@@ -1,6 +1,6 @@
-import { Input, Modal } from "antd";
-import "./ItemBlock.scss";
+import { Input } from "antd";
 import { useEffect, useState } from "react";
+import "./ItemBlock.scss";
 
 export default function AddItemBlock({ onEvent }: { onEvent: (open: boolean, list: ItemBlockType[]) => void }) {
     const [itemList, setItemList] = useState<ItemBlockType[]>([])
@@ -30,7 +30,7 @@ export default function AddItemBlock({ onEvent }: { onEvent: (open: boolean, lis
         onEvent(false, []);
     };
     const handleInput = (type: string, index: number, value: string) => {
-        console.log(`AddItemBlock: handleInput, value:`, type, index, value)
+        // console.log(`AddItemBlock: handleInput, value:`, type, index, value)
         // @ts-ignore
         itemList[index][type] = value
         setItemList([...itemList])

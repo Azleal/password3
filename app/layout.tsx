@@ -9,7 +9,7 @@ import { Providers } from './providers';
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Password3 App",
+  title: "Password3",
   description: "Protect your password securely",
 };
 

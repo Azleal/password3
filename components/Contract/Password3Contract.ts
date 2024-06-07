@@ -31,7 +31,7 @@ export default class Password3Contract{
     return vaults
   }
 
-  public async getVault(vaultId: BigInt): Promise<VaultType|null>{
+  public async getVault(vaultId: number): Promise<VaultType|null>{
     console.log(`getVault: ${vaultId}`)
     const vault: any[] = (await readContract(this.config, {
       ...wagmiContract,
