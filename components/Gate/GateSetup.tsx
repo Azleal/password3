@@ -46,7 +46,7 @@ function Setup() {
       }
       setLoading(true)
       try {
-        const vault = await contract.getVault(BigInt(vaultId))
+        const vault = await contract.getVault(parseInt(vaultId))
         console.log(`useeffect vault: ${JSON.stringify(vault, BigIntReplacer)}`)
         setVault(vault)
       } catch (error) {
