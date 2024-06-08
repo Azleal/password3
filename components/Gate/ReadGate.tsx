@@ -38,7 +38,7 @@ export default function ReadGate({vaultId, to}: {vaultId: number, to: string}) {
 
   useEffect(() => {
     async function getVaults(address: Address){
-      const v = await contract.getVault(BigInt(vaultId))
+      const v = await contract.getVault(vaultId)
       setVault(v)
       if(v && v.entrypoint){
         const {first, rest, ..._encryptInfo} = await readGates(v.id, v.entrypoint)
