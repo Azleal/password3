@@ -3,14 +3,14 @@
 import Password3Contract, { BigIntReplacer, VaultType } from "@/components/Contract/Password3Contract";
 import { readVaultItems } from "@/tools/irys/retriever";
 import { uploadVaultItem } from "@/tools/irys/uploader";
-import { useSearchParams, useRouter } from "next/navigation";
+import { Spin } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useAccount, useConfig } from "wagmi";
 import AddItemBlock from "../components/AddItemBlock";
 import ItemBlock from "../components/ItemBlock";
 import VaultTip from "../components/VaultTip";
 import style from "../index.module.css";
-import { Spin } from "antd";
 function VaultItems() {
     const [open, SetOpen] = useState(false)
     const [itemList, setItemList] = useState<ItemBlockType[][]>([])
@@ -43,7 +43,7 @@ function VaultItems() {
 
     async function getVault(vaultId: number) {
         try {
-            const vault = await contract.getVault(BigInt(vaultId))
+            const vault = await contract.getVault(vaultId)
             address && contract.getUserVaults(address)
             console.log(`getVault===: ${vaultId}`)
             if (!vault) {
